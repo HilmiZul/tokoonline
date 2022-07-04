@@ -1,0 +1,19 @@
+GET http://127.0.0.1:8000/api/kategori/ HTTP/1.1
+
+###
+
+POST http://127.0.0.1:8000/api/kategori HTTP/1.1
+Content-Type: application/json
+
+{
+  "nama_kategori": "bebas",
+}
+
+###
+
+PUT http://127.0.0.1:8000/api/kategori/4 HTTP/1.1
+Content-Type: application/json
+
+{
+  "nama_kategori": "lain2"
+}
