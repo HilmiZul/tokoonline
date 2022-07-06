@@ -1,64 +1,111 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# POINT OF *(Latihan)* a.k.a *step-by-step* 😅
+### Design Tool
+- Figma
+- Adobe Photoshop / or *Freeware* 😁
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Tech Stack:
+1. Laravel (Web API)
+2. MySQL
+3. Vue (Frontend)
+*Auth with JWT (Firebase/Supabase maybe. haha)*
 
-## About Laravel
+### PART 1: Create a Database
+DB name: **tokoonline**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### PART 2: Backend (RESTFul API)
+Project name: **tokoonline**
+Framework: Laravel
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Create a project**
+```bash
+$ composer create-project laravel/laravel tokoonline
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Edit .env**
+```bash
+...
+DB_DATABASE=tokoonline
+...
+```
 
-## Learning Laravel
+**Make a model**
+```bash
+$ cd tokoonline
+$ php artisan make:model Kategori -m
+```
+*--dan seterusnya*
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Create fields/columns**
+- open and edit file ***`...kategoris_table.php`*** or something like `_table.php` end of name.
+Data types:
+  - varchar/text: string()
+  - integer: integer()
+  - date: date()
+  - foreign key: foreignId()
+- add some field in `up()` function
+  ```php
+  //...
+  $table->string('nama_kategori');
+  //...
+  ```
+- filed with foreign key
+  if the table have a foreign key, use `foreignId()`
+  ```php
+  //...
+  $table->foreignId('kategori_id')->constrained();
+  //...
+  ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Migrate Model**
+```bash
+$ php artisan migrate
+```
 
-## Laravel Sponsors
+***Rollback Model***
+use this command to undo change model that made.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```bash
+$ php artisan migrate:rollback
+```
 
-### Premium Partners
+**Make a controller**
+```bash
+$ php artisan make:controller APIKategoriController
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+**Write a function to GET Kategori**
+Edit file: App/Http/Controller/**APIKategoriController.php**
+```php
+/* import model */
+use App\Models\Kategori;
 
-## Contributing
+//....
+  /* create a function to return all Kategori */
+  public function getKategori() {
+    return Kategori::all();
+  }
+//....
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**Write an API Route to GET all Kategori**
+Edit file: Routes/**api.php**
+```php
+//....
+use App\Http\Controller\APIKategoriController;
 
-## Code of Conduct
+Route::get('/kategori', [APIKategoriController::class, 'getKategori']);
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Run App.**
+```bash
+$ php artisan serve
+```
 
-## Security Vulnerabilities
+*Test using Thunder Client (if using VSCode)*
+```php
+method: GET 
+url: http://127.0.0.1:8000/api/kategori
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### PART 3: Frontend
+*comming soon* 🚀
