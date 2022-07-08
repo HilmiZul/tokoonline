@@ -7,14 +7,18 @@ use App\Models\Produk;
 
 class ProdukApiController extends Controller {
     public function getAllProduk() {
-      return Produk::select('produks.id', 'produks.nama_produk', 'produks.harga', 'produks.gambar',
+      return Produk::select('produks.id as pid', 'produks.nama_produk', 'produks.harga', 'produks.gambar',
           'kategoris.id', 'kategoris.nama_kategori')
         ->join('kategoris', 'produks.kategori_id', '=', 'kategoris.id')
         ->get();
     }
 
     public function getProduk(Produk $produk) {
-      return Produk::find($produk);
+      return Produk::select('produks.id as pid', 'produks.nama_produk', 'produks.harga', 'produks.gambar', 'produks.deskripsi',
+      'kategoris.id', 'kategoris.nama_kategori')
+      ->join('kategoris', 'produks.kategori_id', '=', 'kategoris.id')
+      ->where('produks.id', $produk->id)
+      ->get();
     }
 
     public function getProdukKat(Kategori $kategori) {
