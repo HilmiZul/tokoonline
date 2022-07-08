@@ -74,7 +74,7 @@ $ php artisan make:controller APIKategoriController
 ```
 
 **Write a function to GET Kategori**
-Edit file: App/Http/Controller/**APIKategoriController.php**
+Edit file: App/Http/Controllers/**APIKategoriController.php**
 ```php
 /* import model */
 use App\Models\Kategori;
